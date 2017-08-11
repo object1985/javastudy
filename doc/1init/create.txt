@@ -1,0 +1,128 @@
+#本プロジェクトの作成方法
+
+#以下の構成で作成する。
+
+- プロジェクト
+tonaise（親プロジェクト。以下子プロジェクト）
+tonaise-core
+tonaise-dao
+tonaise-jaxrs
+tonaise-jbatch
+tonaise-jsf
+tonaise-showcase
+tonaise-test
+tonaise-webapplication
+
+- JavaSE1.8
+- JavaEE7
+- ApplicationServer -> Websphere Liberty
+- Maven project
+
+~/ $java -version
+java version "1.8.0_65"
+Java(TM) SE Runtime Environment (build 1.8.0_65-b17)
+Java HotSpot(TM) 64-Bit Server VM (build 25.65-b01, mixed mode)
+~/ $
+~/ $mvn -version
+ｖApache Maven 3.3.9 (bb52d8502b132ec0a5a3f4c09453c07478323dc5; 2015-11-11T01:41:47+09:00)
+Maven home: /usr/local/apache-maven-3.3.9
+Java version: 1.8.0_65, vendor: Oracle Corporation
+Java home: /Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre
+Default locale: ja_JP, platform encoding: UTF-8
+OS name: "mac os x", version: "10.12.5", arch: "x86_64", family: "mac"
+~/ $
+
+#親プロジェクトを作成する。
+eclipseにてNew > other > Maven > Maven Project
+Create a simple projectをチェックしてNext.
+GroupId:jp.co.tonaise
+ArtifactId:tonaise
+packagingを「pom」を選択して作成する。
+
+#tonaiseを親プロジェクトとして子プロジェクトを作成する
+eclipseにてNew > other > Maven > Maven Module
+Create a simple projectをチェックしてNext.
+ArtifactId:tonaise-core
+Parent Project:tonaise
+
+#作成後に各プロジェクトのpomはeclipseのcode formatterを書けておくとよい。
+pom.xmlを選択して右クリック > source > format [or] pom.xmlを開いてデフォルトショートカット：command shift f
+
+同様の方法で以下を子プロジェクトとして作成する
+tonaise-dao
+tonaise-jaxrs
+tonaise-jsf
+tonaise-jbatch
+tonaise-showcase(packaging:war)
+tonaise-test
+tonaise-webapplication(packaging:war)
+尚、この時点では(packaging:war)のプロジェクトには１つだけエラーがでるが後述の[プロジェクトの設定]で解消させる。
+
+@see
+http://javazuki.com/articles/maven-module.html
+
+親プロジェクトのpomに以下を追加してJDK1.8を利用することを明示する。そうしないとデフォルトの1.5に強制されるようだ。
+@see
+http://qiita.com/takahitonara/items/769c8775183b13c631c5
+
+その後Maven > Update Projectを行う。
+
+```xml
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<modules>
+		<module>tonaise-core</module>
+		<module>tonaise-showcase</module>
+		<module>tonaise-dao</module>
+		<module>tonaise-jaxrs</module>
+		<module>tonaise-jsf</module>
+		<module>tonaise-jbatch</module>
+		<module>tonaise-test</module>
+		<module>tonaise-webapplication</module>
+	</modules>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.8</version>
+		</dependency>
+	</dependencies>
+```
+
+[プロジェクトの設定]
+(packaging:war)のプロジェクトには以下を設定する。
+プロジェクトで右クリック > プロパティ。Project Facetsを選択する。
+以下を選択する。
+Dynamic Web Module(Runtimeビューで例えばWebsphereやTomcatを選択する)
+Java
+JavaScript
+JavaServer Faces
+
+----------------------------------------------------
+以下実施予定。まとめ中。
+
+# 初回は以下よりプロジェクト作成。
+http://ittoybox.com/archives/553
+
+# まずは以下でJavaEEを導入
+http://enterprisegeeks.hatenablog.com/archive/category/JavaEE
+

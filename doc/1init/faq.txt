@@ -1,0 +1,4 @@
+# web applicationプロジェクトにおいてeclipseで以下のエラー
+An error occurred while filtering resources	Maven Java EE Configuration Problem.
+
+- Maven > Update Project を試みる
