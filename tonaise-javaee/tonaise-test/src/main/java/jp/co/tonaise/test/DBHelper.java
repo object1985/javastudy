@@ -96,13 +96,13 @@ public class DBHelper {
 		try {
 			br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
 			StringBuilder sb = new StringBuilder();
-			String s;
-			while ((s = br.readLine()) != null) {
+			String oneLine;
+			while ((oneLine = br.readLine()) != null) {
 				// コメント行は除く。複数行コメントには対応しない。
-				if (s.trim().startsWith("--") || s.trim().startsWith("/*")) {
+				if (oneLine.trim().startsWith("--") || oneLine.trim().startsWith("/*")) {
 					continue;
 				}
-				sb.append(s).append(" ");
+				sb.append(oneLine).append(" ");
 			}
 
 			String sqls = sb.toString();
@@ -154,14 +154,14 @@ public class DBHelper {
 		if (sql == null || sql.isEmpty() || con == null) {
 			throw new NullPointerException("コネクション、SQLクエリを設定してください");
 		}
-		Statement s = null;
+		Statement statement = null;
 		try {
-			s = con.createStatement();
+			statement = con.createStatement();
 			// SQLクエリ実行結果を返却します。最初の結果が ResultSet オブジェクトの場合は true。更新カウントであるか、または結果がない場合は false。
-			return s.execute(sql);
+			return statement.execute(sql);
 		} finally {
-			if (s != null) {
-				s.close();
+			if (statement != null) {
+				statement.close();
 			}
 		}
 	}
