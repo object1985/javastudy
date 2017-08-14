@@ -1,6 +1,3 @@
-DROP TABLE ap_user;
-DROP TABLE uniform;
-DROP TABLE type_model;
-DROP TABLE generated_id_table;
-DROP TABLE numeric_pattern;
-DROP SCHEMA other;
+DROP TABLE AP_USER;
+DROP TABLE TYPELIST;
+DROP SCHEMA OTHERSCHEMA;

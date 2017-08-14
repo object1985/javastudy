@@ -22,13 +22,13 @@
 	</build>
 
 	<modules>
-		<module>tonaise-core</module>
+		
 		<module>tonaise-showcase</module>
-		<module>tonaise-dao</module>
-		<module>tonaise-jaxrs</module>
-		<module>tonaise-jsf</module>
+		
+		
+		
 		<module>tonaise-jbatch</module>
-		<module>tonaise-test</module>
+		
 		<module>tonaise-webapplication</module>
 		<module>tonaise-javaee</module>
 	</modules>

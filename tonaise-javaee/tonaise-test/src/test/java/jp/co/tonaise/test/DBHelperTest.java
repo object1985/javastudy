@@ -51,7 +51,7 @@ public class DBHelperTest {
 
 	@Test
 	public void testSQLファイルからのクエリ実行() {
-		String resourceName = "CreateTableDBHelperTest.sql";
+		String resourceName = "InsertTableDBHelperTest.sql";
 		try {
 			DBHelper.executeSqlFile(resourceName);
 		} catch (ClassNotFoundException | IOException | SQLException e) {
@@ -61,21 +61,23 @@ public class DBHelperTest {
 
 	@Test
 	public void testSQLクエリ文字列の実行() {
-		String sqlInsert = "INSERT INTO type_model values('もじ列','1','1','1',1,2,3,0.1,0.2,0.3,0.4,'hogehogehogeohgeohgeohgeoh','1013','1','2015-07-01','12:13:14','2015-07-01 12:13:14.555')";
+		String sqlInsert = "INSERT INTO AP_USER (USER_ID,NAME,BIRTHDAY,AGE,ROLE_ID,           CREATED_AT,CREATED_BY,UPDATED_AT,UPDATED_BY) VALUES ('A6','ゆーざー6','1987-01-06',26,'1','2015-01-10'     ,'SYSTEM-USER','2015-01-10','SYSTEM-USER');";
 		try {
 			assertFalse(DBHelper.executeSqlQuery(sqlInsert));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			fail();
 		}
-		String sqlSelect = "SELECT * FROM type_model";
+		//レコード取得がされること
+		String sqlSelect = "SELECT * FROM TYPELIST";
 		try {
 			assertTrue(DBHelper.executeSqlQuery(sqlSelect));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			fail();
 		}
-		String sqlSelectNotExists = "SELECT * FROM type_model where 1=0";
+		//条件句によるレコード取得0件時でもtrueで正常終了すること
+		String sqlSelectNotExists = "SELECT * FROM TYPELIST where 1=0";
 		try {
 			assertTrue(DBHelper.executeSqlQuery(sqlSelectNotExists));
 		} catch (ClassNotFoundException | SQLException e) {
